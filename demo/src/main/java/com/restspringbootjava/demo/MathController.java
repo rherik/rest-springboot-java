@@ -14,6 +14,19 @@ public class MathController {
     
     private final AtomicLong counter = new AtomicLong();
 
+    @RequestMapping(value = "/media/{numberOne}/{numberTwo}", method=RequestMethod.GET)
+    // Adicionar as outras operações matemáticas
+    public Double media(
+    @PathVariable(value = "numberOne") String numberOne, 
+    @PathVariable(value = "numberTwo") String numberTwo 
+    ) throws Exception{
+        if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+            throw new UnsupportedMathOperationException("Please set a numeric value.");
+        }
+        return convertToDoube(numberOne) + convertToDoube(numberTwo);
+    }
+
+
     @RequestMapping(value = "/sum/{numberOne}/{numberTwo}", method=RequestMethod.GET)
     // Adicionar as outras operações matemáticas
     public Double sum(
@@ -25,6 +38,43 @@ public class MathController {
         }
         return convertToDoube(numberOne) + convertToDoube(numberTwo);
     }
+
+    @RequestMapping(value = "/sub/{numberOne}/{numberTwo}", method=RequestMethod.GET)
+    // Adicionar as outras operações matemáticas
+    public Double sub(
+    @PathVariable(value = "numberOne") String numberOne, 
+    @PathVariable(value = "numberTwo") String numberTwo 
+    ) throws Exception{
+        if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+            throw new UnsupportedMathOperationException("Please set a numeric value.");
+        }
+        return convertToDoube(numberOne) - convertToDoube(numberTwo);
+    }
+
+    @RequestMapping(value = "/mult/{numberOne}/{numberTwo}", method=RequestMethod.GET)
+    // Adicionar as outras operações matemáticas
+    public Double mult(
+    @PathVariable(value = "numberOne") String numberOne, 
+    @PathVariable(value = "numberTwo") String numberTwo 
+    ) throws Exception{
+        if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+            throw new UnsupportedMathOperationException("Please set a numeric value.");
+        }
+        return convertToDoube(numberOne) * convertToDoube(numberTwo);
+    }
+
+    @RequestMapping(value = "/divs/{numberOne}/{numberTwo}", method=RequestMethod.GET)
+    // Adicionar as outras operações matemáticas
+    public Double divs(
+    @PathVariable(value = "numberOne") String numberOne, 
+    @PathVariable(value = "numberTwo") String numberTwo 
+    ) throws Exception{
+        if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+            throw new UnsupportedMathOperationException("Please set a numeric value.");
+        }
+        return convertToDoube(numberOne) / convertToDoube(numberTwo);
+    }
+
 
     private Double convertToDoube(String strNumber) {
         if(strNumber == null) return 0D;
