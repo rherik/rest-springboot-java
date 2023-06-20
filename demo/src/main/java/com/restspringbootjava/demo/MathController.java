@@ -1,5 +1,6 @@
 package com.restspringbootjava.demo;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,8 +15,20 @@ public class MathController {
     
     private final AtomicLong counter = new AtomicLong();
 
+    //Média de uma lista
+    // @RequestMapping(value = "/media/{valores}", method=RequestMethod.GET)
+    // public Double media(
+    // @PathVariable List<Integer> valores
+    // ){
+    //     int soma = 0;
+    //     for (int valor : valores) {
+            
+    //         soma += valor;
+    //     }
+    //     return (double) soma / valores.size();
+    // }
+
     @RequestMapping(value = "/media/{numberOne}/{numberTwo}", method=RequestMethod.GET)
-    // Adicionar as outras operações matemáticas
     public Double media(
     @PathVariable(value = "numberOne") String numberOne, 
     @PathVariable(value = "numberTwo") String numberTwo 
@@ -23,12 +36,22 @@ public class MathController {
         if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
             throw new UnsupportedMathOperationException("Please set a numeric value.");
         }
-        return convertToDoube(numberOne) + convertToDoube(numberTwo);
+        return (convertToDoube(numberOne) + convertToDoube(numberTwo)) / 2;
     }
 
 
-    @RequestMapping(value = "/sum/{numberOne}/{numberTwo}", method=RequestMethod.GET)
-    // Adicionar as outras operações matemáticas
+    @RequestMapping(value = "/raiz/{numberOne}", method=RequestMethod.GET)
+    public Double raiz(
+    @PathVariable(value = "numberOne") String numberOne
+    ) throws Exception{
+        if(!isNumeric(numberOne)) {
+            throw new UnsupportedMathOperationException("Please set a numeric value.");
+        }
+        Double resultado = convertToDoube(numberOne);
+        return Math.sqrt(resultado);
+    }
+
+    @RequestMapping(value = "/soma/{numberOne}/{numberTwo}", method=RequestMethod.GET)
     public Double sum(
     @PathVariable(value = "numberOne") String numberOne, 
     @PathVariable(value = "numberTwo") String numberTwo 
@@ -39,8 +62,7 @@ public class MathController {
         return convertToDoube(numberOne) + convertToDoube(numberTwo);
     }
 
-    @RequestMapping(value = "/sub/{numberOne}/{numberTwo}", method=RequestMethod.GET)
-    // Adicionar as outras operações matemáticas
+    @RequestMapping(value = "/subtracao/{numberOne}/{numberTwo}", method=RequestMethod.GET)
     public Double sub(
     @PathVariable(value = "numberOne") String numberOne, 
     @PathVariable(value = "numberTwo") String numberTwo 
@@ -51,7 +73,7 @@ public class MathController {
         return convertToDoube(numberOne) - convertToDoube(numberTwo);
     }
 
-    @RequestMapping(value = "/mult/{numberOne}/{numberTwo}", method=RequestMethod.GET)
+    @RequestMapping(value = "/multiplicacao/{numberOne}/{numberTwo}", method=RequestMethod.GET)
     // Adicionar as outras operações matemáticas
     public Double mult(
     @PathVariable(value = "numberOne") String numberOne, 
@@ -63,7 +85,7 @@ public class MathController {
         return convertToDoube(numberOne) * convertToDoube(numberTwo);
     }
 
-    @RequestMapping(value = "/divs/{numberOne}/{numberTwo}", method=RequestMethod.GET)
+    @RequestMapping(value = "/divisao/{numberOne}/{numberTwo}", method=RequestMethod.GET)
     // Adicionar as outras operações matemáticas
     public Double divs(
     @PathVariable(value = "numberOne") String numberOne, 
@@ -74,7 +96,6 @@ public class MathController {
         }
         return convertToDoube(numberOne) / convertToDoube(numberTwo);
     }
-
 
     private Double convertToDoube(String strNumber) {
         if(strNumber == null) return 0D;
